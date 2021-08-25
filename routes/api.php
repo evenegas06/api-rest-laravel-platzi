@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +25,16 @@ use App\Http\Controllers\Api\V2\PostController as PostV2;
 // Rutas de la Versión 1
 Route::prefix('v1')->group(function() {
     Route::apiResource('posts', PostV1::class)
-        ->only(['show', 'index', 'destroy']);
+        ->only(['show', 'index', 'destroy'])
+        ->middleware('auth:sanctum');
 });
 
 // Rutas de la Versión 2
 Route::prefix('v2')->group(function() {
     Route::apiResource('posts', PostV2::class)
-        ->only(['show', 'index']);
+        ->only(['show', 'index'])
+        ->middleware('auth:sanctum');
 });
+
+// Ruta de login 
+Route::post('login', [LoginController::class, 'login']);    

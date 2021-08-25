@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\V1\PostController;
+use App\Http\Controllers\Api\V1\PostController as PostV1;
+use App\Http\Controllers\Api\V2\PostController as PostV2;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,14 @@ use App\Http\Controllers\Api\V1\PostController;
 //     return $request->user();
 // });
 
+// Rutas de la Versión 1
 Route::prefix('v1')->group(function() {
-    Route::apiResource('posts', PostController::class)
+    Route::apiResource('posts', PostV1::class)
         ->only(['show', 'index', 'destroy']);
+});
+
+// Rutas de la Versión 2
+Route::prefix('v2')->group(function() {
+    Route::apiResource('posts', PostV2::class)
+        ->only(['show', 'index']);
 });
